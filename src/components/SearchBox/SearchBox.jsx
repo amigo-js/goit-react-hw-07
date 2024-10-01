@@ -1,19 +1,20 @@
-import React from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectNameFilter, changeFilter } from "../../redux/filtersSlice";
 import styles from "./SearchBox.module.css";
 
-const SearchBox: React.FC = () => {
+export default function SearchBox() {
   const dispatch = useAppDispatch();
   const filter = useAppSelector(selectNameFilter);
 
-  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFilterChange = (e) => {
     dispatch(changeFilter(e.target.value));
   };
 
   return (
     <div className={styles.container}>
-      <label htmlFor="search">Find contacts by name</label>
+      <label className={styles.text} htmlFor="search">
+        Find contacts by name
+      </label>
       <input
         type="text"
         id="search"
@@ -23,6 +24,4 @@ const SearchBox: React.FC = () => {
       />
     </div>
   );
-};
-
-export default SearchBox;
+}
