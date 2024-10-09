@@ -7,18 +7,14 @@ import Loader from "../Loader/Loader";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import {
   fetchContacts,
-  addContact,
-  deleteContact,
 } from "../../redux/contactsOps";
 import {
-  selectFilteredContacts,
   selectContactsError,
   selectContactsLoading,
 } from "../../redux/contactsSlice";
 
 export default function App() {
   const dispatch = useAppDispatch();
-  const contacts = useAppSelector(selectFilteredContacts);
   const loading = useAppSelector(selectContactsLoading);
   const error = useAppSelector(selectContactsError);
 
@@ -26,23 +22,14 @@ export default function App() {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  const handleAddContact = (newContact) => {
-    const contactWithId = { ...newContact, id: Date.now().toString() };
-    dispatch(addContact(contactWithId));
-  };
-
-  const handleDeleteContact = (id) => {
-    dispatch(deleteContact(id));
-  };
-
   return (
     <div className={styles.container}>
       <h1>Phonebook</h1>
-      <ContactForm onAdd={handleAddContact} />
+      <ContactForm />
       <SearchBox />
       {loading && !error && <Loader />}
       {error && <b>{error}</b>}
-      <ContactList contacts={contacts} onDelete={handleDeleteContact} />
+      <ContactList />
     </div>
   );
 }
